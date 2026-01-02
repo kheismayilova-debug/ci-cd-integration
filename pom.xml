@@ -5,15 +5,12 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.example</groupId>
     <artifactId>java_unit_api</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <!-- Java -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
@@ -21,8 +18,8 @@
         <testng.version>7.11.0</testng.version>
         <rest-assured.version>5.4.0</rest-assured.version>
         <allure.version>2.30.0</allure.version>
-        <lombok.version>1.18.38</lombok.version>
         <jackson.version>2.17.2</jackson.version>
+        <groovy.version>3.0.25</groovy.version>
     </properties>
 
     <dependencies>
@@ -35,7 +32,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- RestAssured core -->
+        <!-- RestAssured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -43,7 +40,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JSON parsing for RestAssured -->
+        <!-- JSON Path (for response assertions) -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-path</artifactId>
@@ -51,37 +48,36 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Groovy JSON support (required by RestAssured's object mapper) -->
+        <!-- Groovy All (required for JSON serialization support for RestAssured) -->
+        <!-- Groovy core 4.x -->
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-bom</artifactId>
-            <version>3.0.21</version>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>4.0.22</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- Allure TestNG adapter -->
+        <!-- Groovy JSON 4.x -->
         <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>${allure.version}</version>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy-json</artifactId>
+            <version>4.0.22</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- Jackson for RestAssured object serialization -->
+        <!-- Jackson for object serialization/deserialization -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
@@ -89,15 +85,23 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Allure TestNG adapter (for annotations & results capture) -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <version>1.18.38</version>
             <scope>provided</scope>
         </dependency>
 
-        <!-- Simple SLF4J logger to avoid warnings -->
+        <!-- Logging shim to silence SLF4J warnings -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -109,6 +113,7 @@
 
     <build>
         <plugins>
+
             <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -120,7 +125,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Surefire plugin for running TestNG tests -->
+            <!-- Surefire plugin to run TestNG tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -129,7 +134,7 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
-
 </project>
